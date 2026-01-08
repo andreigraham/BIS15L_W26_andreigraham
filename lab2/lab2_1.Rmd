@@ -39,6 +39,7 @@ In order to access the potential of R we need to assign values or other types of
 
 Assign a value to object 'x'. The '<-' symbol is read as 'gets'. In this case, x gets 42. Make sure that you are in the environment panel and you should see the value associated with 'x'. On a mac, you can push `option` and `-` to automatically generate the gets symbol.  
 ```{r}
+x <- 42 #read as x gets the value 42
 
 ```
 
@@ -49,41 +50,57 @@ To print the object to the screen, just type x.
 
 Assign a value of 30 to a new object y.
 ```{r}
-
+y <- 30
 ```
 
 The = symbol works, but is not a convention followed by most programmers.
 ```{r}
-
+z=10 #this will work but create problems, use <- instead
 ```
 
 Once objects have been created, you can do things with them.  
 ```{r}
-
+x+y
+```
+```{r}
+#option, command, i gives a new code chunk
 ```
 
 ```{r}
-
+t
 ```
 
 Make two new objects, treatment and control. The value of treatment is 36 and the value of control is 38.
 ```{r}
+#treatment+control
+```
 
+
+```{r}
+control <- 38
+```
+
+
+```{r}
+#treatment <- 36
 ```
 
 What is the sum of treatment and control?
 ```{r}
-
+#treatment+control
 ```
 
 Here we make a new object `my_experiment` that is the sum of the treatment and control. Notice that I use `_` and not spaces. 
 ```{r}
-
+#my_experiment <- treatment+control
+my_experiment
+#using tab to complete prevents syntax errors
 ```
 
 We can also use the function sum to do the same thing. Notice that if I give a new object the same name as an existing object, the old one is replaced.
 ```{r}
-
+my_experiment <- sum(treatment,control)
+my_experiment
 ```
 
 To learn more about the sum function, use the help command `?`.
@@ -104,7 +121,7 @@ We get an error here because `else` is a function in R. You also don't want to g
 
 What is the mean of 2+8+2? (Do the math in your head first). Does the following code match your prediction?
 ```{r}
-
+(2+8+2)/3
 ```
 
 Order of operations applies, so we need to tell R exactly what we want.
@@ -114,7 +131,7 @@ Order of operations applies, so we need to tell R exactly what we want.
 
 Here we use the mean function. Notice that we use `c` which stands for concatenate. This combines the three numbers into a single object that the mean function can use. This type of data structure is called a vector.
 ```{r}
-
+mean(c(2+8+2)) #c stnads for combine and creates a vector
 ```
 
 Why does this not work?
@@ -125,17 +142,22 @@ Why does this not work?
 ## Practice
 1. Create three new objects, `venom_GT`, `chiron`, and `veyron`. These are the fastest cars in the world. Assign each car to its top speed. The venom_GT can go 270, chiron is 261, and veyron is 268. 
 ```{r}
-
+venom_GT <- 270
+chiron <- 261
+veyron <- 268
 ```
 
 2. Use arithmetic to calculate the mean top speed for the cars.
 ```{r}
-
+mean(c(venom_GT,chiron,veyron))
+# c is a vector and can be used to find the mean
 ```
 
 3. Use the function `mean()` to calculate the mean top speed for the cars.
 ```{r}
+(270+261+268)/3
 
+mean_speed <- (venom_GT+veyron+chiron)/3
 ```
 
 ## Types of Data
@@ -149,21 +171,22 @@ my_logical <- FALSE
 
 To find out what type of data you are working with, use the `class()` function. This is important because sometimes we will need to change the type of data to perform certain analyses.
 ```{r}
-
+class(my_integer)
 ```
 
 ```{r}
-
+my_numeric <- 42
 ```
 
 You can use the `is()` and `as()` functions to clarify or specify a type of data.
 ```{r}
-
+is.integer(my_numeric)
 ```
 
 Let's convert my_numeric to an integer.
 ```{r}
-
+my_integer <- as.integer(my_numeric)
+#is important when we work with plots
 ```
 
 ```{r}
@@ -175,15 +198,16 @@ R has a special way to designate missing data, the NA. NA values in R have speci
 
 NA values are used to designate missing data. `is.na` or `anyNA` are useful functions when dealing with NAs in data. 
 ```{r}
-
+my_missing <- NA
+# NA stands for missing
 ```
 
 ```{r}
-
+is.na(my_missing)
 ```
 
 ```{r}
-
+anyNA(my_missing)
 ```
 
 ## Practice  
@@ -194,12 +218,15 @@ new_vector <- c(7, 6.2, 5, 9, NA, 4, 9.8, 7, 3, 2)
 
 2. Calculate the mean of `new_vector`.
 ```{r}
-
+mean(c(new_vector))
 ```
 
 3. How do you interpret this result? What does this mean about NAs? 
+```{r}
+#NA overwrites data??
+```
 
 4. Recalculate the mean using the following code chunk. Why is the useful?  
 ```{r}
-mean(new_vector, na.rm = TRUE) #removes NA values
+mean(new_vector, na.rm = TRUE) #removes NA values and gives the values of numbers other than the missing data
 ```
