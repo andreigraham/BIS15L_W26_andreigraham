@@ -54,6 +54,13 @@ mountains
 
 **5. How many times have each of these mountains been climbed? Make a new vector `summits` and add it to the `mountains` data frame.**
 ```{r}
+#everest has been climbed 12884 times
+#denali has been climbed 26358 times
+#aconcagua NA
+#elbrus NA
+#kilimanjaro NA
+
+summits<-c(12884,26358,NA,NA,NA)
 
 ```
 
