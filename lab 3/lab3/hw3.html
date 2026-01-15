@@ -11,7 +11,7 @@
 
 <meta name="author" content="Andrei Graham" />
 
-<meta name="date" content="2026-01-13" />
+<meta name="date" content="2026-01-15" />
 
 <title>Homework 3</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Homework 3</h1>
 <h4 class="author">Andrei Graham</h4>
-<h4 class="date">2026-01-13</h4>
+<h4 class="date">2026-01-15</h4>
 
 </div>
 
@@ -396,8 +396,8 @@ code chunks to run.</p>
 ## ✔ dplyr     1.1.4     ✔ readr     2.1.6
 ## ✔ forcats   1.0.1     ✔ stringr   1.6.0
 ## ✔ ggplot2   4.0.1     ✔ tibble    3.3.0
-## ✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-## ✔ purrr     1.2.0     
+## ✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.1     
 ## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ## ✖ dplyr::filter() masks stats::filter()
 ## ✖ dplyr::lag()    masks stats::lag()
@@ -440,20 +440,60 @@ mountains</code></pre>
 <p><strong>5. How many times have each of these mountains been climbed?
 Make a new vector <code>summits</code> and add it to the
 <code>mountains</code> data frame.</strong></p>
+<pre class="r"><code>#everest has been climbed 12884 times
+#denali has been climbed 26358 times
+#aconcagua NA
+#elbrus NA
+#kilimanjaro NA
+
+summits&lt;-c(12884,26358,NA,NA,NA)
+mountains&lt;-tibble(first_climbed,feet,meters,mt_name,summits)</code></pre>
 <p><strong>6. Which mountain has the highest number of fatalities? Make
 a new vector <code>fatalities</code> and add it to the
 <code>mountains</code> data frame.</strong></p>
+<pre class="r"><code>#everest has around 330 deaths
+#denali has around 130 deaths
+#aconcagua has around 160 deaths
+#elbrus is unknown
+#kilimanjaro is unknown
+
+#everest has the highest number of fatalities out of the mountains
+
+fatalities&lt;-c(330,130,160,NA,NA)
+
+mountains&lt;-tibble(first_climbed,feet,meters,mt_name,summits,fatalities)</code></pre>
 <p><strong>7. What is the fatality rate (i.e., fatalities divided by
 summits) for each mountain? Create a new vector
 <code>fatality_rate</code> and add it to the <code>mountains</code> data
 frame.</strong></p>
+<pre class="r"><code>na.omit(fatalities)</code></pre>
+<pre><code>## [1] 330 130 160
+## attr(,&quot;na.action&quot;)
+## [1] 4 5
+## attr(,&quot;class&quot;)
+## [1] &quot;omit&quot;</code></pre>
+<pre class="r"><code>na.omit(summits)</code></pre>
+<pre><code>## [1] 12884 26358
+## attr(,&quot;na.action&quot;)
+## [1] 3 4 5
+## attr(,&quot;class&quot;)
+## [1] &quot;omit&quot;</code></pre>
+<pre class="r"><code>(fatalities/summits)</code></pre>
+<pre><code>## [1] 0.025613164 0.004932089          NA          NA          NA</code></pre>
+<pre class="r"><code>fatality_rate&lt;-c(fatalities/summits)
+
+mountains&lt;-tibble(first_climbed,feet,meters,mt_name,summits,fatalities,fatality_rate)</code></pre>
 <p><strong>8. Write your data frame to a .csv file called
 <code>mountains_data</code>.</strong></p>
+<pre class="r"><code>write.csv(mountains,file = &quot;mountains_data.csv&quot;,row.names=FALSE )</code></pre>
 <p><strong>9. Clear your environment panel by clicking on the broom
 icon. Then read in your <code>mountains_data.csv</code> file to a new
 object called <code>mountains</code>.</strong></p>
+<pre class="r"><code>mountains&lt;-read.csv(&quot;mountains_data.csv&quot;)</code></pre>
 <p><strong>10. Use a summary function of your choice to show the
 structure of your <code>mountains</code> data frame.</strong></p>
+<pre class="r"><code>summarise(mountains)</code></pre>
+<pre><code>## data frame with 0 columns and 1 row</code></pre>
 </div>
 <div id="knit-and-upload" class="section level2">
 <h2>Knit and Upload</h2>
