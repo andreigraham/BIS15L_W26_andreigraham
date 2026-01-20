@@ -29,25 +29,19 @@ glimpse(msleep)
 **2. What are the names of the variables? To get a better idea of what the variables mean, you can use `?msleep`.**
 ```{r}
 names(msleep)
-?msleep
+#?msleep
 ```
 **3. Make a plot that shows the number of mammals in each vore type. Which vore type is most represented in the data?**
 ```{r}
 
 
-data(msleep, package = "ggplot2") # If ggplot2 is installed
-
-# Count vore types
+data(msleep, package = "ggplot2")
 vore_counts <- table(msleep$vore)
-
-# Base R barplot
 barplot(vore_counts,
         main = "Number of Mammals by Vore Type",
         xlab = "Vore Type",
         ylab = "Number of Mammals",
         col = rainbow(length(vore_counts)))
-
-
 
 #Herbivore is the most represented in the data
 ```
@@ -66,15 +60,28 @@ ggplot(data=msleep,
 ```
 **7. Is there a relationship between body weight and total sleep time? Add appropriate labels and a title to your plot.**
 ```{r}
-ggplot(data=msleep,
-   mapping=aes(x=sleep_total,y=bodywt))+geom_bar()+scale_y_log10()
+ggplot(msleep) +
+  geom_jitter(aes(x=sleep_total, y=bodywt))
+   
 ```
+
+```{r}
+ggplot(msleep)+
+  geom_jitter(aes(x=sleep_total, y=bodywt))
+```
+ 
 **8. Which vore type tends to sleep the most? Build a plot to support your answer.**
 ```{r}
+ggplot(msleep)+
+  geom_boxplot(aes(x=vore, y=sleep_total))
 
+#Carnivores tend to sleep the most
 ```
 **9. Is there a relationship between brain weight and body weight? Build a plot to support your answer.**
 ```{r}
+ggplot(msleep)+
+  geom_jitter(aes(x=brainwt, y=bodywt))
+
 ```
 **10. Build one plot of your choice that provides additional insight into the msleep dataset. Be sure to include appropriate labels and a title.**
 ```{r}
