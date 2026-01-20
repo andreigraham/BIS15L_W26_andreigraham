@@ -81,10 +81,11 @@ ggplot(msleep)+
 ```{r}
 ggplot(msleep)+
   geom_jitter(aes(x=brainwt, y=bodywt))
-
+#There is a positive correlation
 ```
 **10. Build one plot of your choice that provides additional insight into the msleep dataset. Be sure to include appropriate labels and a title.**
 ```{r}
+
 ```
 ## Knit and Upload
 Please knit your work as an .html file and upload to Canvas. Homework is due before the start of the next lab. No late work is accepted. Make sure to use the formatting conventions of RMarkdown to make your report neat and clean!  
