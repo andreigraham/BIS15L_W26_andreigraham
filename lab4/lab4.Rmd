@@ -96,7 +96,7 @@ Scatter plots are good at revealing relationships that are not readily visible i
 
 Let's ask the question: Is there a relationship between body mass and flipper length?
 ```{r}
-ggplot(data=penguins, mapping=aes(x=body_mass_g, y=flipper_length_mm))+ geom_point()
+ggplot(data=penguins, mapping=aes(x=body_mass_g, y=flipper_length_mm))+ geom_point(na.rm=T)
 ```
 
 ```{r}

@@ -14,6 +14,7 @@ Answer the following questions and/or complete the exercises in RMarkdown. Pleas
 ```{r}
 library("tidyverse")
 options(scipen = 999) #disable scientific notation
+data(msleep,package="ggplot2")
 ```
 
 For this homework, we will be using the `msleep` dataset from the `ggplot2` package. This dataset contains information about the sleep habits of various mammals. [Reference](https://ggplot2.tidyverse.org/reference/msleep.html): V. M. Savage and G. B. West. A quantitative, theoretical framework for understanding mammalian sleep. Proceedings of the National Academy of Sciences, 104 (3):1051-1056, 2007.
@@ -28,11 +29,25 @@ glimpse(msleep)
 **2. What are the names of the variables? To get a better idea of what the variables mean, you can use `?msleep`.**
 ```{r}
 names(msleep)
+?msleep
 ```
 **3. Make a plot that shows the number of mammals in each vore type. Which vore type is most represented in the data?**
 ```{r}
-ggplot(data=msleep,
-       mapping = aes(x=vore))+geom_bar()
+
+
+data(msleep, package = "ggplot2") # If ggplot2 is installed
+
+# Count vore types
+vore_counts <- table(msleep$vore)
+
+# Base R barplot
+barplot(vore_counts,
+        main = "Number of Mammals by Vore Type",
+        xlab = "Vore Type",
+        ylab = "Number of Mammals",
+        col = rainbow(length(vore_counts)))
+
+
 
 #Herbivore is the most represented in the data
 ```
@@ -51,9 +66,12 @@ ggplot(data=msleep,
 ```
 **7. Is there a relationship between body weight and total sleep time? Add appropriate labels and a title to your plot.**
 ```{r}
+ggplot(data=msleep,
+   mapping=aes(x=sleep_total,y=bodywt))+geom_bar()+scale_y_log10()
 ```
 **8. Which vore type tends to sleep the most? Build a plot to support your answer.**
 ```{r}
+
 ```
 **9. Is there a relationship between brain weight and body weight? Build a plot to support your answer.**
 ```{r}
