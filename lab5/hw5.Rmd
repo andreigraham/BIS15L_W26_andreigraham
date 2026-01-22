@@ -43,17 +43,21 @@ names(homerange)
 
 **3. Which animal groups are represented in the data? Make a plot that shows the number in each class.**
 ```{r}
+select(homerange, class)
+count(homerange, class)
+
+#There are four classes of animal groups: actinopterygii, aves, mammalia, and reptilia
 
 ```
 
 **4. Are there more carnivores or herbivores represented in the data? Make a plot that shows the number in each trophic guild.**
 ```{r}
-
+count(homerange, trophic.guild)
 ```
 
 **5. Which herbivorous mammals have homeranges greater than 1,000,000 m²? Show only the common name, order, mean homerange size, and mean body mass. Arrange the data in descending order by homerange size and show only the top 10 species.**
 ```{r}
-
+filter(homerange, mean.hra.m2>1000000)
 ```
 
 **6. Which two species have the largest and smallest homerange sizes?**
@@ -67,22 +71,48 @@ names(homerange)
 
 **7. Which carnivorous mammals have the largest homeranges?**
 ```{r}
+filter(homerange, taxon=="mammals"& order=="carnivora")
+arrange(homerange)
 
+#red pandas, arctic foxes, and Ethiopian wolves have the largest homranges
 ```
 
 **8. Is there a relationship between body mass and homerange size? Make a scatterplot to show this relationship. Be sure to include appropriate labels and a title.**
 ```{r}
 
+
+body_mass<- c("mean.mass.g")
+
+
+ggplot(data=homerange, 
+       mapping=aes(x=body_mass, y=mean.hra.m2))+geom_jitter()+ scale_y_log10()+ geom_smooth(method = "lm", color="red", se=FALSE)+ labs(title= "Body Mass and Homerange Size", x="Mean Body Mass", y="Homerange Size")
+
+#There is no correlation between body mass and homerange size
+
 ```
 
 **9. Use filter to extract the data for only birds and mammals. Then make a plot that compares the homerange sizes of these two groups. Be sure to include appropriate labels and a title.**
 ```{r}
+filter(homerange, taxon=="birds"| taxon=="mammals")
 
+
+ggplot(data=filter(homerange, taxon=="birds"| taxon=="mammals"), 
+       mapping=aes(x=body_mass, y=mean.hra.m2))+geom_jitter()+ scale_y_log10()+ geom_smooth(method = "lm", color="red", se=FALSE)+ labs(title= "Body Mass and Homerange Size of Birds and Mammals", x="Mean Body Mass", y="Homerange Size")
 ```
 
 **10. Do one additional exploratory analysis of your choice. Before writing the code, write the question you are trying to answer. The question should be biologically meaningful and appropriate for the data. It must include at least one `filter()`, `select()`, and `arrange()`.**
 ```{r}
+#Is there a correlation between the order and genus? Which genus is most likely to be carnivorus?
 
+genus<- c(homerange$genus)
+
+homerange %>%
+  select(order, genus) %>%
+filter(order=="carnivora") %>%
+count(genus, sort=T) %>%
+arrange(desc(n))
+
+#Mustela is the most likely to be carnivorous
 ```
 
 ## Knit and Upload
