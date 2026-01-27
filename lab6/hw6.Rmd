@@ -46,46 +46,76 @@ glimpse(gabon)
 ```{r}
 ?factor
 gabon%>%
-  select("hunt_cat", "land_use", "transect_id")%>%
-  mutate(hunt_cat=as.factor(hunt_cat))
-mutate(across(c(hunt_cat, land_use, transect_id),=as.factor))
+  mutate(hunt_cat=as.factor(hunt_cat),
+         land_use=as.factor(land_use),
+         transect_id=as.factor(transect_id))
   
 ```
 
 **5. Make a plot that shows the number of transects for each land use type.**
 ```{r}
+#gabon%>%
+  #distinct(transect_id,land_use)%>%
+  #ggplot(aes(x=land_use))+
+  #geom_bar()
 
+ggplot(data=gabon, 
+       mapping=aes(x=land_use,y= transect_id))+
+  geom_boxplot()+
+  labs(x= "Land Use", y= "Transect ID")
+  
+ 
 ```
 
-```{r}
-
-```
 
 **6. How does vegetation richness compare among land use types?**
 ```{r}
+ggplot(data=gabon, 
+       mapping=aes(x=land_use,y= veg_rich))+
+  geom_boxplot()+
+  labs(x= "Land Use", y= "Vegetation Richness")
 
+#Logging has the highest amount of vegetation richness between land usage. 
 ```
 
 **7. For which land use type (national parks, logging, or neither) is average all species diversity the greatest?**
 ```{r}
+#park has the greatest average diversity of species
+```
+
+```{r}
+?mean
+colnames(gabon)
+gabon%>%
+  group_by(land_use)%>%
+  summarise(mean_div=mean(diversity_all_species, na.rm=T))%>%
+  arrange(desc(mean_div))
+```
+
+```{r}
+gabon%>%
+  select(land_use, diversity_all_species)%>%
+  filter(land_use=="Park")%>%
+  mean(diversity_all_species, na.rm=T)
+
 
 ```
 
 ```{r}
-
-```
-
-```{r}
-
-```
-
-```{r}
-
+#gabon%>%
+ #filter(diversity_all_species)
+  
 ```
 
 **8. Is there a relationship between vegetation richness and mammal species richness?**
 ```{r}
-
+ggplot(data=gabon, 
+       mapping=aes(x=veg_rich,y= rich_mammal_species))+
+  geom_jitter()+
+  geom_smooth(method = lm, se=T)
+  labs(x= "Land Use", y= "Transect ID")
+  
+  #Yes, as the richness of vegetation increases, so does the richness of mammal species.
 ```
 
 **9. Use `filter` to find all transects that have greater than 15 tree species or a breast height diameter between 50 and 60cm.  **
