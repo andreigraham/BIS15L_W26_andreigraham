@@ -501,20 +501,21 @@ dataframe and use it for the remaining questions.</strong><br />
 <pre class="r"><code>elephants%&gt;%
   mutate(years_of_sample_collection=as.factor(years_of_sample_collection),
          elephant_id=as.factor(elephant_id),
-         sex=as.factor(sex))</code></pre>
+         sex=as.factor(sex),
+         estimated_age_years=as.factor(estimated_age_years))</code></pre>
 <pre><code>## # A tibble: 777 × 7
 ##    years_of_sample_collection elephant_id sex   estimated_age_years
-##    &lt;fct&gt;                      &lt;fct&gt;       &lt;fct&gt;               &lt;dbl&gt;
-##  1 1966-68                    12          f                   0.08 
-##  2 1966-68                    34          f                   0.08 
-##  3 1966-68                    162         f                   0.083
-##  4 1966-68                    292         f                   0.083
-##  5 1966-68                    11          f                   0.25 
-##  6 1966-68                    152         f                   0.25 
-##  7 1966-68                    264         f                   0.25 
-##  8 1966-68                    263         f                   0.5  
-##  9 1966-68                    266         f                   0.5  
-## 10 1966-68                    217         f                   1    
+##    &lt;fct&gt;                      &lt;fct&gt;       &lt;fct&gt; &lt;fct&gt;              
+##  1 1966-68                    12          f     0.08               
+##  2 1966-68                    34          f     0.08               
+##  3 1966-68                    162         f     0.083              
+##  4 1966-68                    292         f     0.083              
+##  5 1966-68                    11          f     0.25               
+##  6 1966-68                    152         f     0.25               
+##  7 1966-68                    264         f     0.25               
+##  8 1966-68                    263         f     0.5                
+##  9 1966-68                    266         f     0.5                
+## 10 1966-68                    217         f     1                  
 ## # ℹ 767 more rows
 ## # ℹ 3 more variables: shoulder_height_in_cm &lt;dbl&gt;, tusk_length_in_cm &lt;dbl&gt;,
 ## #   tusk_circumference_in_cm &lt;dbl&gt;</code></pre>
@@ -587,7 +588,15 @@ of sample collection. Does the sampling look even between years and
 sexes?</strong><br />
 <br />
 </p>
-<pre class="r"><code>#elephants%&gt;%</code></pre>
+<pre class="r"><code>elephants%&gt;%
+  summarise(mean_yrs=mean(estimated_age_years, na.rm=T),
+            median_yrs=median(estimated_age_years, na.rm=T),
+            sd_yrs=sd(estimated_age_years, na.rm=T),
+            total=n())</code></pre>
+<pre><code>## # A tibble: 1 × 4
+##   mean_yrs median_yrs sd_yrs total
+##      &lt;dbl&gt;      &lt;dbl&gt;  &lt;dbl&gt; &lt;int&gt;
+## 1     15.0         12   12.3   777</code></pre>
 <p><br />
 <br />
 <br />

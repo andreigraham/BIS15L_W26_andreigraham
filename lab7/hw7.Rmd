@@ -70,7 +70,8 @@ names(elephants)
 elephants%>%
   mutate(years_of_sample_collection=as.factor(years_of_sample_collection),
          elephant_id=as.factor(elephant_id),
-         sex=as.factor(sex))
+         sex=as.factor(sex),
+         estimated_age_years=as.factor(estimated_age_years))
 ```
 \
 \
@@ -109,7 +110,11 @@ elephants%>%
 **8. What is the mean, median, and standard deviation for age of males and females included in the study? Separate the results by year of sample collection. Does the sampling look even between years and sexes?**  
 \
 ```{r}
-#elephants%>%
+elephants%>%
+  summarise(mean_yrs=mean(estimated_age_years, na.rm=T),
+            median_yrs=median(estimated_age_years, na.rm=T),
+            sd_yrs=sd(estimated_age_years, na.rm=T),
+            total=n())
 ```
 \
 \
