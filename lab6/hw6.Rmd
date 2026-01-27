@@ -3,7 +3,8 @@ title: "Homework 6"
 author: "Andrei Graham"
 date: "`r Sys.Date()`"
 output:
-  html_document: 
+  pdf_document: default
+  html_document:
     theme: spacelab
 ---
 
@@ -112,15 +113,17 @@ gabon%>%
 ggplot(data=gabon, 
        mapping=aes(x=veg_rich,y= rich_mammal_species))+
   geom_jitter()+
-  geom_smooth(method = lm, se=T)
-  labs(x= "Land Use", y= "Transect ID")
+  geom_smooth(method = lm, se=T)+
+  labs(x= "richness of vegetation", y= "richness of mammal species")
   
   #Yes, as the richness of vegetation increases, so does the richness of mammal species.
 ```
 
 **9. Use `filter` to find all transects that have greater than 15 tree species or a breast height diameter between 50 and 60cm.  **
 ```{r}
+colnames(gabon)
 
+filter(gabon, between(veg_dbh,50,60)| veg_rich>15)
 ```
 
 ```{r}
@@ -129,7 +132,8 @@ ggplot(data=gabon,
 
 **10.Which transects and land use types have more than 10 tree species and 10 mammal species? Use `arrange()` to sort by the number of tree species.**
 ```{r}
-
+filter(gabon, veg_rich>10& (rich_mammal_species>10))%>%
+arrange(desc(veg_rich))
 ```
 
 ## Knit and Upload
