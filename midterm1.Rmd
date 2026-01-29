@@ -106,11 +106,11 @@ anolis%>%
 **Question 7. (4 points) Is sampling equal across islands? Create a plot to visualize the number of anole species sampled from each island. Be sure to label your axes and add a title.**
 \
 ```{r}
-  ggplot(data=anolis,
-         mapping=aes(x=island))+geom_bar()+
-  labs(x="island",
-       y= "number of samples",
-       title = "number of samples per island")
+ # ggplot(data=anolis,
+ #        mapping=aes(x=island))+geom_bar()+
+#  labs(x="island",
+ #      y= "number of samples",
+#       title = "number of samples per island")
 
 #sampling is unequal across islands, with Cuba having the most samples and Jamacia having the least
 ```
@@ -132,11 +132,11 @@ anolis%>%
 **Question 9. (4 points) Is sampling equal across habitat types? Create a plot to visualize the number of anole species sampled from each habitat type. Be sure to label your axes and add a title.**
 \
 ```{r}
-ggplot(data=anolis,
-         mapping=aes(x=habitat))+geom_bar()+
-  labs(x="type of habitat",
-       y= "number of samples",
-       title = "number of samples per habitat")
+#ggplot(data=anolis,
+#         mapping=aes(x=habitat))+geom_bar()+
+#  labs(x="type of habitat",
+#       y= "number of samples",
+ #      title = "number of samples per habitat")
 
 #The number of samples varies per habitat, with trunk-ground having te highest number of samples and twig having the lowest
 ```
@@ -162,11 +162,9 @@ ggplot(data=anolis,
 **Question 11. (4 points) The plot above is compelling, but don't we expect larger lizards to have longer limbs? What about tail length? Shouldn't longer lizards have longer tails? To correct for this, make two new columns: 1. `ratio_of_hindlimb_to_body`, and 2. `ratio_of_tail_to_body`. Don't forget to add these columns to the anolis data frame.**
 \
 ```{r}
-#ratio_of_hindlimb_to_body<- (anolis$hindlimb_length_mm/anolis$body_length_mm)
-#anolis%>%
-#ratio_of_tail_to_body<- (tail_length_mm/body_length_mm)
-#ratio_of_hindlimb_to_body
-#ratio_of_tail_to_body
+ratio_of_hindlimb_to_body<- c(anolis$hindlimb_length_mm/anolis$body_length_mm)
+
+ratio_of_tail_to_body<- c(anolis$tail_length_mm/anolis$body_length_mm)
 
 anolis<- anolis
 #colnames(anolis)<- ((colnames(anolis))& ratio_of_hindlimb_to_body& ratio_of_tail_to_body)
@@ -181,7 +179,13 @@ anolis<- anolis
 **Question 12. (4 points) Create a new plot that examines the distribution of `ratio_of_hindlimb_to_body` across habitat types. How does this plot differ from the one you made in Problem 10?  Be sure to label your axes and add a title.**
 \
 ```{r}
-
+ggplot(data=anolis,
+         mapping=aes(x=habitat, y=ratio_of_hindlimb_to_body))+geom_boxplot()
+  labs(x="island",
+       y= "hindlimb to body ratio",
+       title = "hindlimb ratio per habitat")
+  
+  #This is different from the previous graph since it shows habitat instead of island, there can be many habitats on one island.
 ```
 \
 \
@@ -200,10 +204,12 @@ anolis<- anolis
 \
 ```{r}
 #anolis%>%
- # (habitat)%>%
-# summarise(mean_tl=mean(toepad_lamellae_count, na.rm=T),
- #          total=n())
-
+#(anolis$habitat)%>%
+#summarise(mean(toepad_lamellae_count, na.rm=T),
+ #total=n())
+#anolis%>%
+#  select(habitat =="twig")%>%
+#mean(anolis$toepad_lamellae_count)
 ```
 \
 \
@@ -212,7 +218,7 @@ anolis<- anolis
 **Problem 15. (5 points) The number of toepad lamellae is significantly different for trunk-crown species. But, is this consistent across all islands? Make a plot that shows the range in number of toepad lamellae by island for trunk-crown species only. Be sure to label your axes and add a title.**
 \
 ```{r}
-
+mapping=aes(x=island)
 ```
 \
 \
