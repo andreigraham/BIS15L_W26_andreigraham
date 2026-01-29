@@ -35,7 +35,7 @@ mean tusk length, mean basal circumference were variables
 **2. Load `elephants.csv` and store it as a new object called `elephants`.**  
 \
 ```{r}
-read_csv("/Users/acekoii/Desktop/BIS15L_W26_andreigraham/lab7/data/elephants.csv")%>%
+read_csv("/Users/aceii/OneDrive/Desktop/BIS15L_W26_andreigraham/lab7/data/elephants.csv")%>%
   clean_names()
 
 #glimpse(elephants.csv)
@@ -47,7 +47,7 @@ read_csv("/Users/acekoii/Desktop/BIS15L_W26_andreigraham/lab7/data/elephants.csv
 **3. Clean the data by converting variable names to lowercase with no spaces or special characters.**  
 \
 ```{r}
-elephants<- read_csv("/Users/acekoii/Desktop/BIS15L_W26_andreigraham/lab7/data/elephants.csv")%>%
+elephants<- read_csv("/Users/aceii/OneDrive/Desktop/BIS15L_W26_andreigraham/lab7/data/elephants.csv")%>%
   clean_names()
 ```
 \
@@ -97,7 +97,10 @@ elephants%>%
   class(elephants$sex)
 elephants%>%
 mutate(sex=as_factor(sex))
+```
 
+
+```{r}
 elephants%>%
  tabyl(sex)
 
@@ -122,14 +125,28 @@ elephants%>%
 
 **9. Is age (independent variable) a positive predictor of tusk length (dependent variable)? Create a plot that shows the relationship between these variables and add a linear model fit line.**  
 \
-\
+```{r}
+ggplot(data=elephants,
+       mapping=aes(x=estimated_age_years, y=tusk_length_in_cm))+
+  geom_jitter()+
+  geom_smooth(method=lm, se=T)
+
+#There is a positive correlation between age and tusk length, meaning that the higher in age an elephant is, the longer the tusk length tends to be.
+```
 \
 \
 \
 
 **10. Is shoulder height (independent variable) a positive predictor of tusk length (dependent variable)? Create a plot that shows the relationship between these variables and add a linear model fit line.**  
 \
-\
+```{r}
+ggplot(data=elephants,
+       mapping=aes(x=shoulder_height_in_cm, y=tusk_length_in_cm))+
+  geom_jitter()+
+  geom_smooth(method=lm, se=T)
+
+#Yes, shoulder height is a positive predictor of tusk length, meaning if an elephant has a taller shoulder height, then it's more likely to also have a longer tusk length as well.
+```
 \
 \
 \
@@ -137,13 +154,42 @@ elephants%>%
 **11. The authors argue that because poachers preferentially target elephants with large tusks, this has resulted in a decrease in average tusk length. Is this supported by the data? Show your code and calculations below.**  
 \
 \
-\
+```{r}
+ggplot(data=elephants,
+       mapping=aes(x=estimated_age_years, y=tusk_length_in_cm))+
+  geom_jitter()+
+  geom_smooth(method=lm, se=T)
+
+#It doesn't appear to be consistent with the data
+```
 \
 \
 
 **12. Male elephants reach effective sexual maturity at 25 years while females are sexually mature at 12 years. Make a new dataframe that extracts only the males and females at sexual maturity. Then, make a plot that shows the range of tusk length between the two sample periods for these mature elephants.**   
 \
-\
+```{r}
+male_e<- elephants%>%
+  filter(estimated_age_years>=25 & sex=="m")
+  glimpse(male_e)
+```
+
+
+```{r}
+female_e<- elephants%>%
+  filter(estimated_age_years>=12 & sex=="f")
+glimpse(female_e)
+```
+
+```{r}
+mature_e<- bind_rows(male_e, female_e)
+
+ggplot(data=mature_e,
+       mapping=aes(x=sex, y=tusk_length_in_cm))+ 
+  geom_boxplot(na.rm = T)+
+  labs(x= "sex",
+       y= "tusk length",
+       title= "tusk length and sex")
+```
 \
 \
 \
