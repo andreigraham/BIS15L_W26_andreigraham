@@ -77,9 +77,8 @@ fisheries_clean%>%
 ```{r}
 fisheries_clean%>%
   group_by(country)%>%
-  summarise(n_distinct(country))%>%
-  sort_by(count=="catch")%>%
-  arrange(desc())
+  summarise(total_catch=sum(catch)) %>% 
+  arrange(desc(total_catch))
 ```
 
 7. In 2023, what were the top 10 most caught species? To keep things simple, assume `common_name` is sufficient to identify species. What does `NEI` stand for in some of the common names? How might this be concerning from a fisheries management perspective?
