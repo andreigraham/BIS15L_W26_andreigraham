@@ -72,7 +72,18 @@ Let's think about this another way- can we make a plot that shows the effect of 
   
 To fix this problem, we need to reshape the table to long format while keeping track of column names and values. We do this using `pivot_longer()`. Notice that the dimensions of the data frame change.  
 ```{r}
+heartrate_long<- heartrate%>%
+  pivot_longer(-patient,
+               names_to = "drug",
+               values_to = "heartrate")
+```
 
+
+```{r}
+heartrate_long%>%
+  filter(patient=="Margaret")%>%
+  ggplot(aes(x=drug, y=heartrate))+
+  geom_col()
 ```
 
 ## Practice
