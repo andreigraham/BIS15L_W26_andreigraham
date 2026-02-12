@@ -65,8 +65,20 @@ total_sharks<- sharks%>%
 
 
 ```{r}
-#total_sharks%>%
-  #seperate
+sharks%>%
+  group_by(county, month)%>%
+  summarise(total_sharks)%>%
+  arrange(desc(n))%>%
+  ggplot(aes(x=month))+
+  geom_col()
+
+life_history%>%
+  group_by(order)%>%
+  summarize(mean_mass= mean(mass, na.rm=T))%>%
+  arrange(desc(mean_mass))%>%
+  ggplot(aes(x=, y=order))+
+  geom_col()+
+  scale_x_log10()
 ```
 
 
