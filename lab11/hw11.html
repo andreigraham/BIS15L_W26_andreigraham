@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Your Name Here" />
+<meta name="author" content="Andrei Graham" />
 
 <meta name="date" content="2026-02-12" />
 
@@ -375,7 +375,7 @@ display: none;
 
 
 <h1 class="title toc-ignore">Homework 11</h1>
-<h4 class="author">Your Name Here</h4>
+<h4 class="author">Andrei Graham</h4>
 <h4 class="date">2026-02-12</h4>
 
 </div>
@@ -412,12 +412,47 @@ script in the data folder.</p>
   clean_names() %&gt;% 
   filter(between(year, 1925, 2025))</code></pre>
 <ol style="list-style-type: decimal">
-<li><p>Use the function(s) of your choice to get an idea of the overall
+<li>Use the function(s) of your choice to get an idea of the overall
 structure of the data, including its dimensions, column names, classes,
-etc.</p></li>
-<li><p>How many countries are represented in this dataset?</p></li>
-<li><p>Which five countries have had the largest absolute population
-growth between 1925-2025? Show this as a table.</p></li>
+etc.</li>
+</ol>
+<pre class="r"><code>colnames(gapminder)</code></pre>
+<pre><code>## [1] &quot;country&quot; &quot;year&quot;    &quot;pop&quot;     &quot;gdp&quot;     &quot;lex&quot;</code></pre>
+<pre class="r"><code>dim(gapminder)</code></pre>
+<pre><code>## [1] 19695     5</code></pre>
+<ol start="2" style="list-style-type: decimal">
+<li>How many countries are represented in this dataset?</li>
+</ol>
+<pre class="r"><code>gapminder%&gt;%
+summarise(unique(country))</code></pre>
+<pre><code>## Warning: Returning more (or less) than 1 row per `summarise()` group was deprecated in
+## dplyr 1.1.0.
+## ℹ Please use `reframe()` instead.
+## ℹ When switching from `summarise()` to `reframe()`, remember that `reframe()`
+##   always returns an ungrouped data frame and adjust accordingly.
+## Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+## generated.</code></pre>
+<pre><code>## # A tibble: 195 × 1
+##    `unique(country)`  
+##    &lt;chr&gt;              
+##  1 Afghanistan        
+##  2 Angola             
+##  3 Albania            
+##  4 Andorra            
+##  5 UAE                
+##  6 Argentina          
+##  7 Armenia            
+##  8 Antigua and Barbuda
+##  9 Australia          
+## 10 Austria            
+## # ℹ 185 more rows</code></pre>
+<pre class="r"><code>#there are 195 countries represented by the data</code></pre>
+<ol start="3" style="list-style-type: decimal">
+<li>Which five countries have had the largest absolute population growth
+between 1925-2025? Show this as a table.</li>
+</ol>
+<pre class="r"><code>#mutate?</code></pre>
+<ol start="4" style="list-style-type: decimal">
 <li><p>Make a plot that shows population growth over time for the top
 country you found in question #3.</p></li>
 <li><p>Has global life expectancy changed between 1925 and 2025? Show
