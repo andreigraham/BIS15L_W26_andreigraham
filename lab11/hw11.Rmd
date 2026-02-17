@@ -141,16 +141,44 @@ gapminder%>%
 
 9. How does per capita GDP growth compare between these same five countries over the past 50 years? Show this as a plot.
 ```{r}
-
+gapminder%>%
+  filter(country%in% c("Brunei", "Qatar", "Luxembourg", "Singapore", "UAE"))%>%
+  filter(year%in% c(1975, 2025))%>%
+  ggplot(aes(x=year, y=gdp, color= country))+
+  #geom_line()+
+  geom_jitter()+ #(method= "lm", se=F)
+  labs( title= "gdp growth for the top 5 countries over the past 50 years",
+        x="year",
+        y= "gdp",
+        color= "country")+
+  theme_minimal()
 ```
 
 10. Do one analysis of your choice that includes a table and plot as outputs.
 ```{r}
-
+#what would a graph look like of the bottom 5 countries?
+gapminder%>%
+  filter(year %in% c(1975, 2025))%>%
+  filter(country!= "Monaco")%>%
+  select(country, year, gdp)%>%
+  arrange(country, year)%>%
+  group_by(country)%>%
+  summarise(mean_gdp= mean(gdp, na.rm=T))%>%
+  arrange(mean_gdp)
 ```
 
 ```{r}
-
+gapminder%>%
+  filter(country%in% c("Burundi", "Mozambique", "South Sudan", "Central African Republic", "Malawi"))%>%
+  filter(year%in% c(1975, 2025))%>%
+  ggplot(aes(x=year, y=gdp, color= country))+
+  #geom_line()+
+  geom_jitter()+ #(method= "lm", se=F)
+  labs( title= "gdp growth for the bottom 5 countries over the past 50 years",
+        x="year",
+        y= "gdp",
+        color= "country")+
+  theme_minimal()
 ```
 
 ## Knit and Upload
