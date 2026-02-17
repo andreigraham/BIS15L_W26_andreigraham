@@ -11,7 +11,7 @@
 
 <meta name="author" content="Andrei Graham" />
 
-<meta name="date" content="2026-02-12" />
+<meta name="date" content="2026-02-17" />
 
 <title>Homework 11</title>
 
@@ -376,7 +376,7 @@ display: none;
 
 <h1 class="title toc-ignore">Homework 11</h1>
 <h4 class="author">Andrei Graham</h4>
-<h4 class="date">2026-02-12</h4>
+<h4 class="date">2026-02-17</h4>
 
 </div>
 
@@ -451,7 +451,23 @@ summarise(unique(country))</code></pre>
 <li>Which five countries have had the largest absolute population growth
 between 1925-2025? Show this as a table.</li>
 </ol>
-<pre class="r"><code>#mutate?</code></pre>
+<pre class="r"><code>#mutate?
+gapminder%&gt;%
+  filter(year%in% 1925:2025)</code></pre>
+<pre><code>## # A tibble: 19,695 × 5
+##    country      year     pop   gdp   lex
+##    &lt;chr&gt;       &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1 Afghanistan  1925 8748779 1114.  38.9
+##  2 Afghanistan  1926 8289705 1128.  39.0
+##  3 Afghanistan  1927 7854721 1142.  39.2
+##  4 Afghanistan  1928 7442562 1157.  39.3
+##  5 Afghanistan  1929 7121951 1171.  39.4
+##  6 Afghanistan  1930 6888085 1186.  39.6
+##  7 Afghanistan  1931 6736411 1201.  39.7
+##  8 Afghanistan  1932 6662618 1216.  39.9
+##  9 Afghanistan  1933 6662618 1231.  40.0
+## 10 Afghanistan  1934 6662618 1247.  40.2
+## # ℹ 19,685 more rows</code></pre>
 <ol start="4" style="list-style-type: decimal">
 <li><p>Make a plot that shows population growth over time for the top
 country you found in question #3.</p></li>

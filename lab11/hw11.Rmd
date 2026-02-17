@@ -55,6 +55,8 @@ summarise(unique(country))
 3. Which five countries have had the largest absolute population growth between 1925-2025? Show this as a table.
 ```{r}
 #mutate?
+gapminder%>%
+  filter(year%in% 1925:2025)
 ```
 
 4. Make a plot that shows population growth over time for the top country you found in question #3.
