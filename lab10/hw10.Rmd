@@ -43,82 +43,147 @@ sharks%>%
 
 2.  Make a plot that shows the total number of incidents per county.
 ```{r}
+#geom_col won't run on my home computer (for some reason?), but it works in class so I added geom_boxplot so I can see the plot
 sharks%>%
   group_by(county)%>%
   count(county)%>%
   arrange(desc(n))%>%
   ggplot(aes(x=reorder(county,n), y=n))+
-    geom_col()+
-  coord_flip()+
-  labs(title= "Shark Incidents in Different Counties",
+    geom_boxplot()+
+    #geom_col()+
+    coord_flip()+
+    labs(title= "Shark Incidents in Different Counties",
        y= "Number of Incidents",
        x= "Name of County")
 ```
 
 3. Are there months of the year when incidents are more likely to occur? Make a plot that shows the total number of incidents by month. Which month has the highest number of incidents?  
 ```{r}
-total_sharks<- sharks%>%
-  group_by(county)%>%
-  count(county)%>%
-  arrange(desc(n))
+sharks%>%
+  count(month, name = "total_incidents")%>%
+  arrange(desc(total_incidents))
+```
+
+
+```{r}
+#sharks%>%
+ # count(month, name = "total_incidents")%>%
+ # ggplot(aes(x=month, y=total_incidents))+
+ # geom_col()+
+ # labs(title = "shark incidents by month",
+     #  x= "month",
+     #  y= "number of incidents")
+  
+
+#my code won't run and chatgpt says its because my rlang is outdated 1.1.6 instead of 1.1.7, but I cant install the package :(
 ```
 
 
 ```{r}
 sharks%>%
-  group_by(county, month)%>%
-  summarise(total_sharks)%>%
-  arrange(desc(n))%>%
-  ggplot(aes(x=month))+
-  geom_col()
-
-life_history%>%
-  group_by(order)%>%
-  summarize(mean_mass= mean(mass, na.rm=T))%>%
-  arrange(desc(mean_mass))%>%
-  ggplot(aes(x=, y=order))+
-  geom_col()+
-  scale_x_log10()
+  count(month, name = "total_incidents")%>%
+  mutate(month = factor(month))%>%
+  ggplot(aes(x=month, y=total_incidents))#+
+  #geom_col()
 ```
-
-
 ```{r}
+sharks%>%
+  count(month, name = "total_incidents")%>%
+  arrange(desc(total_incidents))
 
+#July, August, September and October are when the attacks are most likely to occur
 ```
 
 4. Is there a time of day when most attacks occur? Make a plot that shows the total number of incidents by time of day. Which time of day has the highest number of incidents?  
 ```{r}
-
+#sharks%>%
+  #group_by(time)%>%
+  #count(time, name = "total_incidents")%>%
+  #ggplot(aes(x=reorder(time, total_incidents),  y=total_incidents))+
+  #geom_col()+
+  #coord_flip()+
+  #labs(title = "total shark incidents by time",
+       #x= "time of day",
+       #y= "number of incidents")
 ```
 
 5. How do the number and types of injuries compare by county? Make a table that shows the number of injury types by county. Which county has the highest number incidents? (hint: your table should be in wide format)
 ```{r}
+sharks%>%
+  count(county, injury, name = "n_incidents")%>%
+  pivot_wider(names_from = injury,
+              values_from = n_incidents
+              )
+```
+
+
+```{r}
+  sharks%>%
+    count(county, name="total_incidents")%>%
+    arrange(desc(total_incidents))
+  
+  #San Diego has the highest number of incidents
 
 ```
 
 6. Use the table from #5 to make a plot that shows the total number of incidents by county.
 ```{r}
+total_county <- sharks%>%
+  count(county, name= "total_incidents")
 
+#total_county%>%
+  #ggplot(aes(x=reorder(county, total_incidents), y=total_incidents))+
+ # geom_col()+
+ # coord_flip()+
+ # labs(title = "total shark incidents by county",
+      # x= "county",
+      # y= "number of incidents")
 ```
 
 7. In the data, `mode` refers to a type of activity. Which activity is associated with the highest number of incidents?
 ```{r}
+sharks%>%
+  count(mode, name = "total_incidents")%>%
+  arrange(desc(total_incidents))
 
+#Surfing is the activity with the highest number of incidents
 ```
 
 8. Make a plot that compares the number of incidents by activity.
 ```{r}
-
+#sharks%>%
+  #count(mode, name = "total_incidents")%>%
+  #arrange(desc(total_incidents))%>%
+  #ggplot(aes(x=reorder(mode, total_incidents),
+             #x=total_incidents))+
+  #geom_col()+
+  #coord_flip()+
+  #labs(title = "shark incidents by activity",
+      # x= "activity",
+      # y= "number of incidents")
 ```
 
 9. Which shark species is involved in the highest number of incidents?  
 ```{r}
+sharks%>%
+  count(species, name = "shark_species")%>%
+  arrange(desc(shark_species))
 
+#(Great)White Shark is the species with the highes number of incidents
 ```
 
 10. Are all incidents involving Great White's fatal? Make a plot that shows the number and types of incidents for Great White's only.  
 ```{r}
-
+#sharks%>%
+  #filter(species=="White")%>%
+ # count(injury, name = "injury_type")%>%
+  #ggplot(aes(x= reorder(injury, injury_type),
+             #y= injury_type))+
+  #geom_col()+
+ # coord_flip()+
+ # labs(title= "great white shark incidents",
+      # x= "injury type",
+      # y= "number of incidents")
 ```
 
 ## Knit and Upload
