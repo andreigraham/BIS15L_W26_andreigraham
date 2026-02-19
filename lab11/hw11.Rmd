@@ -21,6 +21,7 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 ```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 library(janitor)
+library(ggplot2)
 ``` 
 
 ```{r}
@@ -171,9 +172,10 @@ gapminder%>%
 gapminder%>%
   filter(country%in% c("Burundi", "Mozambique", "South Sudan", "Central African Republic", "Malawi"))%>%
   filter(year%in% c(1975, 2025))%>%
-  ggplot(aes(x=year, y=gdp, color= country))+
+  filter(!gdp == "NA") %>% 
+  ggplot(aes(x=gdp, y=year, color= country))+
   #geom_line()+
-  geom_jitter()+ #(method= "lm", se=F)
+  geom_point()+ #(method= "lm", se=F)
   labs( title= "gdp growth for the bottom 5 countries over the past 50 years",
         x="year",
         y= "gdp",
