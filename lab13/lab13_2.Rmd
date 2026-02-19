@@ -117,11 +117,14 @@ For this practice, we will use data from my research on _Usofila_ spiders. These
 
 1. Load the two files as separate dataframes. Make sure to clean the column names.
 ```{r message=FALSE, warning=FALSE}
+spider_records<- read_csv("data/spider_records.csv")%>%
+  clean_names()
 
 ```
 
 ```{r, message = FALSE}
-
+#spider_locations<- read_csv("data/spiders_locations.csv")%>%
+#  clean_names()
 ```
 
 2. Join the files using an appropriate key and join type.
@@ -140,7 +143,7 @@ For this practice, we will use data from my research on _Usofila_ spiders. These
 
 4. Save your final data to a `.csv`.
 ```{r}
-
+#write.csv(spider_locations, )
 ```
 
 ## That's it, let's take a break!   

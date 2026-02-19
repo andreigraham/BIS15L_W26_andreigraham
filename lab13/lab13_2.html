@@ -10,7 +10,7 @@
 
 
 
-<meta name="date" content="2026-02-18" />
+<meta name="date" content="2026-02-19" />
 
 <title>Lab 13.2</title>
 
@@ -1503,7 +1503,7 @@ border-radius: 0px;
 
 
 <h1 class="title toc-ignore">Lab 13.2</h1>
-<h4 class="date">2026-02-18</h4>
+<h4 class="date">2026-02-19</h4>
 
 </div>
 
@@ -1581,13 +1581,20 @@ contains all the records of spiders and 2. spiders_locations.csv which
 contains the lat/long for each record. An accession number is a unique
 identifier for each specimen.</p>
 <ol style="list-style-type: decimal">
-<li><p>Load the two files as separate dataframes. Make sure to clean the
-column names.</p></li>
+<li>Load the two files as separate dataframes. Make sure to clean the
+column names.</li>
+</ol>
+<pre class="r"><code>spider_records&lt;- read_csv(&quot;data/spider_records.csv&quot;)%&gt;%
+  clean_names()</code></pre>
+<pre class="r"><code>#spider_locations&lt;- read_csv(&quot;data/spiders_locations.csv&quot;)%&gt;%
+#  clean_names()</code></pre>
+<ol start="2" style="list-style-type: decimal">
 <li><p>Join the files using an appropriate key and join type.</p></li>
 <li><p>Convert the date column to a date format using
 lubridate.</p></li>
 <li><p>Save your final data to a <code>.csv</code>.</p></li>
 </ol>
+<pre class="r"><code>#write.csv(spider_locations, )</code></pre>
 </div>
 <div id="thats-it-lets-take-a-break" class="section level2">
 <h2>That’s it, let’s take a break!</h2>
