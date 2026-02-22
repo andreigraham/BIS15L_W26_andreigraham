@@ -174,13 +174,20 @@ gapminder%>%
   filter(year%in% c(1975, 2025))%>%
   filter(!gdp == "NA") %>% 
   ggplot(aes(x=gdp, y=year, color= country))+
-  #geom_line()+
+  geom_line()+
   geom_point()+ #(method= "lm", se=F)
   labs( title= "gdp growth for the bottom 5 countries over the past 50 years",
         x="year",
         y= "gdp",
         color= "country")+
   theme_minimal()
+```
+
+```{r}
+gapminder %>% 
+  ggplot()+
+  geom_bar(aes(x = country))+
+  coord_flip()
 ```
 
 ## Knit and Upload
