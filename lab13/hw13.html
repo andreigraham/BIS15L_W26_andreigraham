@@ -502,12 +502,10 @@ missing data in each column for the <code>amniota</code> data.</li>
 ## $ female_body_mass_at_maturity_g        &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ no_sex_svl_cm                         &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …
 ## $ no_sex_maturity_d                     &lt;dbl&gt; NA, NA, NA, NA, NA, NA, NA, NA, …</code></pre>
-<pre class="r"><code>sum(amniota== -999, na.rm=T)</code></pre>
-<pre><code>## [1] 0</code></pre>
-<pre class="r"><code>#There&#39;s still 1641 &quot;-999&quot; in the data??? They&#39;re characters???
-sum(is.na(amniota))</code></pre>
-<pre><code>## [1] 528196</code></pre>
-<pre class="r"><code>#There are 526555 -999 in the dataset which are classified as numbers
+<pre class="r"><code>#sum(amniota== -999, na.rm=T)
+#There&#39;s still 1641 &quot;-999&quot; in the data??? They&#39;re characters???
+#sum(is.na(amniota))
+#There are 526555 -999 in the dataset which are classified as numbers
 miss_var_summary(amniota)</code></pre>
 <pre><code>## # A tibble: 36 × 3
 ##    variable                       n_miss pct_miss
@@ -524,7 +522,6 @@ miss_var_summary(amniota)</code></pre>
 ## 10 female_svl_cm                   20242     94.9
 ## # ℹ 26 more rows</code></pre>
 <pre class="r"><code>amniota%&gt;%
-  #group_by(n_miss)%&gt;%
   miss_var_summary()%&gt;%
   arrange(desc(n_miss))</code></pre>
 <pre><code>## # A tibble: 36 × 3
@@ -560,8 +557,7 @@ any other potential issues? If so, fix them.</li>
 ##  9 weaning_weight_g                20258     95.0
 ## 10 female_svl_cm                   20242     94.9
 ## # ℹ 26 more rows</code></pre>
-<pre class="r"><code>#??????????????????
-summary(amniota)</code></pre>
+<pre class="r"><code>summary(amniota)</code></pre>
 <pre><code>##     class              order              family             genus          
 ##  Length:21322       Length:21322       Length:21322       Length:21322      
 ##  Class :character   Class :character   Class :character   Class :character  

@@ -43,14 +43,13 @@ amniota<- amniota%>%
 ```{r}
 glimpse(amniota)
 
-sum(amniota== -999, na.rm=T)
+#sum(amniota== -999, na.rm=T)
 #There's still 1641 "-999" in the data??? They're characters???
-sum(is.na(amniota))
+#sum(is.na(amniota))
 #There are 526555 -999 in the dataset which are classified as numbers
 miss_var_summary(amniota)
 
 amniota%>%
-  #group_by(n_miss)%>%
   miss_var_summary()%>%
   arrange(desc(n_miss))
 
@@ -59,7 +58,7 @@ amniota%>%
 4. Double check your replacement using `summary`. Do you see any other potential issues? If so, fix them.
 ```{r}
 miss_var_summary(amniota)
-#??????????????????
+
 summary(amniota)
   
 ```
