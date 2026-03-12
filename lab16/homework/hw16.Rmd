@@ -1,6 +1,6 @@
 ---
 title: "Homework YY"
-author: "Your Name Here"
+author: "Andrei Graham"
 date: "`r Sys.Date()`"
 output:
   html_document:
@@ -20,10 +20,10 @@ Make sure to use the formatting conventions of RMarkdown to make your report nea
 
 ### Install Biostrings
 ```{r,bquiet=TRUE, message=FALSE, warning=FALSE}
-#if (!requireNamespace("BiocManager", quietly = TRUE))
-#  install.packages("BiocManager")
+if (!requireNamespace("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
 
-#BiocManager::install("Biostrings")
+BiocManager::install("Biostrings")
 ```
 ## Load the libraries
 ```{r message=FALSE, warning=FALSE}
@@ -47,47 +47,83 @@ You will use BLAST, a tool used in real clinical and research microbiology labs,
 
 **2.Perform a blastx search using `goi_01.txt` as the query and the "core_nt" database. Download the cluster table results in CSV format, change the name to "goi_01_blastx.csv" and store in the homework/data folder. Read the csv file into R and clean the column names. Save the cleaned data frame as goi_01_blastx.**
 ```{r}
-#read_csv()
+query_seq<- read_csv("C:/Users/aceii/OneDrive/Desktop/BIS15L_W26_andreigraham/lab16/unknown_genome_01.txt")
+
+#This file contains a DNA sequence since there is no U present and no amino acids
 ```
 
 ```{r}
-
+goi_01_blastx<- read_csv("C:/Users/aceii/OneDrive/Desktop/BIS15L_W26_andreigraham/lab16/V0PN6D6F014-Alignment-Descriptions.csv")%>%
+  clean_names()
 ```
 
 **3.Display the top 10 blastx hits, based on e_value, for this blastx search? (Include the Scientific Name, Cluster Anscestor, Cluster Representative Sequence, Max Score, Query Cover, E value and Percent Identity)**
 ```{r}
-
+goi_01_blastx%>%
+  arrange(e_value)%>%
+  slice_head(n = 10)%>%
+  select(cluster_ancestor,
+         representative_sequence,
+         max_score,
+         query_cover,
+         e_value,
+         per_ident)
 ```
  
 
 **4. create a plot that shows the different in percent identity for each Scientific Name of the top 10 blastx hits. Make sure to label your axes and give your plot a title.**
 ```{r}
+#there's no scientific name?
+#names(goi_01_blastx)
+goi_01_blastx%>%
+    arrange(e_value)%>%
+  slice_head(n = 10)%>%
+  ggplot(aes(x = cluster_ancestor,
+             y = per_ident))+
+  geom_col(fill = "pink3")+
+  labs( x = "cluster ancestor",
+        y = "percent identity",
+        title = "percent identity of top 10 blastx hits")
 
+#why is the percent identity over 100% when the data doesn't show that :(
+```
+```{r}
+summary(goi_01_blastx$per_ident)
 ```
 
 
 **5 Perform a blastn search using `goi_01.txt` as the query and the "core_nt" database. Download the alignment description in CSV format, change the name to "goi_01_blastn.csv" and store in the homework/data folder. Read the csv file into R and clean the column names. Save the cleaned data frame as goi_01_blastn.**
 ```{r}
-
+goi_01_blastn<- read_csv("goi_01_blastn.csv")%>%
+  clean_names()
 ```
 
 ```{r}
-
+names(goi_01_blastn)
 ```
 
 **6. What was the top blastn hit, based on e_value, for this blastn search? (Include the Cluster Ancestor, Cluster, Representative Sequence, Max Score, Query Cover, E value, Percent Identity and Accession Link)**
 ```{r}
-
+goi_01_blastn%>%
+  arrange(e_value)%>%
+  slice_head(n = 1)%>%
+  select(scientific_name,
+         description,
+         max_score,
+         query_cover,
+         e_value,
+         per_ident, 
+         accession)
 ```
 
 **7. Based on the blastx and blastn results, what do you think this gene is and what bacteria do you think it came from?**
 ```{}
-
+#based on the results, I think this gene is a chromosome from some sort of fungus
 ```
 
 **8. For the top blastn hit, click on the accession link for this bacteria and download the coding sequences as a FASTA Protein file. Read the fasta file into R using the Biostrings package and store it in an object called `goi_blastn_hit`.**
 ```{r}
-
+goi_blastn_hit<- read_csv("C:/Users/aceii/OneDrive/Desktop/BIS15L_W26_andreigraham/lab16/sequence.fasta")
 ```
 
 ```{r}
@@ -96,13 +132,14 @@ You will use BLAST, a tool used in real clinical and research microbiology labs,
 
 **9. From the same organism, identify 5 other annotated genes? Do these genes suggest about the biology or virulence of this bacterium?** *Annotated genes can be found in the "CDS" section of the GenBank file. You can also find genes by going to summary page for the organism and looking at the "View annotated genes" section.*
 ```{r}
-
+#tufA, trnW, rplK, rplA, rplJ
+#these genes suggest that the bacteria plays a significant role in DNA translation and replication
 ```
 
 
 **10. Now that you have an idea of this bacteria's identity, what illness/disease do you think the patient has? What is the historical or public health significance of this disease? Based on the gene you identified, what role might this gene play in pathogenicity?**
 ```{}
-
+#This patient may have some disease related to the growth of bacteria in the stomach or gastrointestinal system due to consuming something bad
 ```
 
 
