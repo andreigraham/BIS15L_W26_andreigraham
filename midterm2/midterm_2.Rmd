@@ -2,10 +2,10 @@
 title: "Midterm 2 W26"
 date: "`r Sys.Date()`"
 output:
-  pdf_document:
-    toc: false
   html_document:
     theme: spacelab
+    toc: false
+  pdf_document:
     toc: false
 ---
 
@@ -35,7 +35,7 @@ library(shiny)
 ## API Key
 Since you will build a map as part of the exam, take a moment to register your API key. You may need to look up your [stadia maps](https://client.stadiamaps.com/dashboard/overview) API key online (please do that now).
 ```{r}
-#register_stadiamaps("824e1e2a-26b0-4511-874e-b93a502f5dce", write = FALSE)
+register_stadiamaps("824e1e2a-26b0-4511-874e-b93a502f5dce", write = FALSE)
 ```
 
 ## About the data
@@ -174,7 +174,7 @@ head(un_creat_ratio)
 ```{r}
 #create a new column and name it fasting
 #also make a case where a bear is not fasting
- un_creat_ratio %>% 
+ un_creat_ratio<- un_creat_ratio %>% 
   mutate(fasting = case_when(un_creat_ratio <= 10 ~ "fasting", un_creat_ratio > 10 ~ "not fasting")) %>% 
   mutate(as.factor(fasting))
 
@@ -183,80 +183,97 @@ head(un_creat_ratio)
 ```
 
 ```{r}
-#true_fasting <- fasting 
+#Unload the package
+detach("package:lubridate", unload = TRUE)
+
+#simpleWarning: ‘lubridate’ namespace cannot be unloaded:
+#  namespace ‘lubridate’ is imported by ‘janitor’ so cannot be unloaded
 ```
 
 
 8. (6 points) The authors found that the number of fasting bears increased in the SB population but decreased in the CS population. Make a plot(s) that shows the number of fasting bears by year for both populations to visualize this trend.
 ```{r}
-#un_creat_ratio%>%
-#  filter(fasting == "fasting")%>%
-#  ggplot(aes(x = year, y = popn))+
-#  geom_point()
+un_creat_ratio%>%
+  filter(fasting == "fasting")%>%
+  group_by(year, popn)%>%
+  summarise(n = n())%>%
+  ggplot(aes(x = year, y = n, color = popn, group = popn))+
+  geom_point()+
+  geom_line()+ 
+  labs( title = "number of fasting polar bears by year",
+        x = "year",
+        y = "number of fasting bears",
+        color = "population")
 ```
 
 9. (8 points) Where are the polar bears used in this study located? Make a static (not leaflet) distribution map that shows the locations of  bears by population. (hint: use `color=popn` in the `aes()` of `geom_point()`)
 ```{r}
-#polar_bears %>% 
-#  select(lat, long) %>%
-#summary()
+polar_bears %>% 
+  select(lat, long) %>%
+summary()
 ```
 
 ```{r}
-#lat <- c(62.46, 72.70)
-#long <- c(-172.2, -134.8)
-#bbox <- make_bbox(long, lat, f=0.05)
+lat <- c(62.46, 72.70)
+long <- c(-172.2, -134.8)
+bbox <- make_bbox(long, lat, f=0.05)
 ```
 
 ```{r}
-#map1<- get_stadiamap(bbox, maptype = "stamen_terrain", zoom = 5)
+map1<- get_stadiamap(bbox, maptype = "stamen_terrain", zoom = 5)
 
-#ggmap(map1)
+ggmap(map1)
 ```
 ```{r}
-#ggmap(map1)+
-#  geom_point(data = polar_bears, aes(long, lat), size = 0.5, color = "black", alpha= 0.8)+
-#  labs(x= "longitude",
-#       y= "latitude",
-#       title = "polar bears")
+ggmap(map1)+
+  geom_point(data = polar_bears, aes(long, lat), size = 0.5, color = "black", alpha= 0.8)+
+  labs(x= "longitude",
+       y= "latitude",
+       title = "polar bears")
 ```
 
 
 10. (10 points) Build a simple shiny app that shows the range of `un_creat_ratio` values for both populations. The user should be able to select the fill variable and choose between sex, mating, age_class, denning, and fasting. Please use the code chunk below so that your exam knits.
 ```{r, eval=F, echo=T}
-#library(shiny)
+library(shiny)
 
-#ui <- fluidPage(
+ui <- fluidPage(
+  selectInput("x",
+              "select x variable",
+              choices = c("sex",
+                          "mating",
+                          "denning",
+                          "age_class",
+                          "fasting"),
+              selected = "fasting"
+  )
+              )
   
-#    dashboardHeader(title = "population of polar bears"),
-  
-#  dashboardSidebar(disable = TRUE),
-  
-#  dashboardBody(
-#  selectInput("x",
-#              "select fill variable",
-#              choices = c("sex",
- #                         "mating",
-#                          "age_class",
-#                          "denning",
- #                         "fasting"),
-#              selected = "sex"),
-#    plotOutput("plot",
-#             width = "500px",
-#             height = "400px")
-)
 
-#server <- function(input, output, session) {
-#  output$plot <- renderPlot({
+  plotOutput("plot",
+             width = "500px",
+             height = "400px")
+
+
+server <- function(input, output) {
+  
+  output$plot <- renderPlot({
     
- #output$plot<- renderPlot({
+    ggplot(data = un_creat_ratio, 
+           aes(x=popn,
+               y=un_creat_ratio, 
+               fill = .data[[input$fill_var]]
+               ))+
+      geom_boxplot(alpha = 0.7, na.rm = T) +
+      labs( title = " UN Creatine Ratio by Population",
+            x = "population",
+            y = "un creatine ratio")
+  })
   
- #     ggplot(polar_bears, 
-#      aes_string(x = input$x, y= un_creat_ratio, fill = "un_creat_ratio"))+
- #   geom_boxplot()
 }
-)}
-#shinyApp(ui, server)
+
+shinyApp(ui = ui, server = server)
+
 ```
 
 ## Submit the Midterm
